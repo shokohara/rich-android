@@ -1,8 +1,18 @@
 package com.github.shoscala.richandroid
 
 import org.json._
+import android.view.View
+import android.view.View.OnClickListener
 
 object Defaults {
+
+  implicit class RichView(view: View) {
+    def onClick(f: View => Unit) {
+      view.setOnClickListener(new OnClickListener {
+        override def onClick(v: View) = f(v)
+      })
+    }
+  }
 
   implicit class RichJSONObject(json: JSONObject) {
     def getJSONObjectAsOpt(name: String) = try {
